@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 import openai
 import os
@@ -9,6 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 API_KEY = os.getenv("WEATHER_SERVICE_KEY")
 
 @app.route('/', methods=['GET'])
@@ -38,9 +40,9 @@ def get_input():
     if 'inputValue' not in data:
         return jsonify({'message': 'No input value provided'}), 400
 
-    input_text = data['inputValue']  # 'inputValue'라는 키의 값을 가져옵니다.
+    input_text = data['inputValue']
     
-    return jsonify({'message': f'Received input: {input_text}'}), 200  # 서버가 'inputValue'를 잘 받았음을 알립니다.
+    return jsonify({'message': f'Received input: {input_text}'}), 200
 
 
 if __name__ == '__main__':
